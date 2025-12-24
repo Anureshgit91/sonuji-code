@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "kv" {
-  name                = "sonu-kv"
+  name                = "sonu-kv-sea"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -22,7 +22,14 @@ resource "azurerm_key_vault_access_policy" "terraform" {
     "List",
     "Set",
     "Delete",
+    "Purge",
   ]
+
+  timeouts {
+    create = "10m"
+    update = "10m"
+    delete = "10m"
+  }
 }
 
 

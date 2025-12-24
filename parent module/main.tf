@@ -7,7 +7,7 @@ module "rg" {
 module "storage" {
   depends_on = [ module.rg ]
   source              = "../child_module/storage_account"
-  name                = "sonustg"
+  name                = "sonustgsea"
   location            = var.location
   resource_group_name = module.rg.rg_name
 }
@@ -20,6 +20,7 @@ module "vnet" {
 }
 
 module "subnet" {
+  depends_on = [ module.vnet ]
   source               = "../child_module/subnet"
   name                 = "sonusubnet"
   resource_group_name  = module.rg.rg_name
@@ -27,6 +28,7 @@ module "subnet" {
 }
 
 module "nsg" {
+  depends_on = [ module.subnet ]
   source              = "../child_module/nsg"
   name                = "sonu-nsg"
   location            = var.location
@@ -55,11 +57,11 @@ module "vm" {
   source              = "../child_module/vm"
   name                = "sonuvm"
   location            = var.location
-  vm_location         = var.vm_location
   vm_size             = var.vm_size
   resource_group_name = module.rg.rg_name
   nic_id              = module.nic.nic_id
   admin_username      = var.admin_username
+  admin_password      = module.key_vault_secret.vm_password
   key_vault_id        = module.key_vault.key_vault_id
 }
 
@@ -79,7 +81,6 @@ module "key_vault_secret" {
 module "sql" {
   source              = "../child_module/sql"
   location            = var.location
-  sql_location        = var.sql_location
   resource_group_name = module.rg.rg_name
   admin_password      = var.admin_password
 }

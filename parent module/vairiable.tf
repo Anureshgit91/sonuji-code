@@ -1,6 +1,6 @@
 variable "location" {
   description = "Default region for resources"
-  default     = "eastus"
+  default     = "Southeast Asia"
 
   validation {
     condition     = length(var.location) > 0

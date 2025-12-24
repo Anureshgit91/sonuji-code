@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "sonurgs"
-  location = "westeurope"
+  name     = var.name
+  location = "Southeast Asia"
 }
 
 

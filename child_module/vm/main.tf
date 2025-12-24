@@ -1,16 +1,12 @@
-data "azurerm_key_vault_secret" "vm_password" {
-  name         = "sonu-vm-password"
-  key_vault_id = var.key_vault_id
-}
-
 resource "azurerm_windows_virtual_machine" "vm" {
   name                = var.name
   location            = var.vm_location != "" ? var.vm_location : var.location
   resource_group_name = var.resource_group_name
   size                = var.vm_size
+  computer_name       = "sonuvm"
 
   admin_username = var.admin_username
-  admin_password = data.azurerm_key_vault_secret.vm_password.value
+  admin_password = var.admin_password
 
   network_interface_ids = [var.nic_id]
 

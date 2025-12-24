@@ -1,5 +1,5 @@
 resource "azurerm_mssql_server" "sql" {
-  name                         = "sonu-sql-server"
+  name                         = "sonu-sql-server-sea"
   resource_group_name          = var.resource_group_name
   location                     = var.sql_location != "" ? var.sql_location : var.location
   version                      = "12.0"
